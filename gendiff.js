@@ -1,31 +1,20 @@
 #!/usr/bin/env node
 import { program } from 'commander';
 
-const hello = (name) => {
-  return `Hello, ${name}!`;
-};
 
-const command = (names, lower, upper) => {
-  for (const name of names) {
-    const msg = hello(name);
-    if (lower) {
-      console.log(msg.toLowerCase());
-    } else if (upper) {
-      console.log(msg.toUpperCase());
-    } else {
-      console.log(msg);
-    }
-  }
-};
 
 program
-  .option('-l, --lower', 'only use lowercase letters')
-  .option('-u, --upper', 'only use uppercase letters')
-  .parse(process.argv);
-
+.name('gendiff')
+.description('Compares two configuration files and shows a difference.')
+.version('0.1.0', '-V, --version', 'output the version number')
+.helpOption('-h, --help', 'output usage information') 
+// .arguments('<options')
+.action((filepath1, filepath2, options) => {
+  console.log(genDiff(filepath1, filepath2, options.format));
+});
+program.parse();
 const { args } = program;
-const options = program.opts();
-const { lower, upper } = options;
 
-command(args, lower, upper);
+command(args);
+
 
